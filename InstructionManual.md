@@ -25,11 +25,7 @@ The output structure of the results has also been adjusted to facilitate the cat
 Most of the parameters have essentially remained unchanged from the previous versions of MC-GPU except for three new additions. These new additions are highlighted in the image below.
 
 <br>
-<p align="center">
-
-  <img width="800" height="300" src="https://github.com/DIDSR/MCGPUv1.3_PCD/assets/input.png">
-
-</p>
+![image](assets/input.png)
 <br>
 
 These new parameters provide the simulation key variables to successfully run a Photon Counting Detector on MCGPU. The EMin and EMax define the minimum and maximum for the energy range that the user is interested in examining. As a result, a simulated photon that arrives at the detector consisting of energy outside of this user-defined will not be taken into account and excluded from the simulation results. Nbin stands for the number of energy bins. This variable defines how many equal groups the energy range be split into. 
@@ -51,11 +47,7 @@ The Figure below displays the output structure of results in the new Photon Coun
 
 <br>
 
-<p align="center">
-
-  <img width="600" height="800" src="https://github.com/DIDSR/MCGPUv1.3_PCD/assets/structure.png">
-
-</p>
+![image](assets/structure.png)
 
 <br>
 
