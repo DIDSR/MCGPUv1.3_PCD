@@ -27,7 +27,7 @@ Most of the parameters have essentially remained unchanged from the previous ver
 <br>
 <p align="center">
 
-  <img width="800" height="300" src="https://github.com/tamish2/Sample/assets/141270879/d137ad97-c14b-4d55-a989-6de6739f2040">
+  <img width="800" height="300" src="https://github.com/DIDSR/MCGPUv1.3_PCD/assets/input.png">
 
 </p>
 <br>
@@ -53,7 +53,7 @@ The Figure below displays the output structure of results in the new Photon Coun
 
 <p align="center">
 
-  <img width="600" height="800" src="https://github.com/tamish2/Sample/assets/141270879/7d563b27-9aa9-407b-8ead-d718b7ad9ff9">
+  <img width="600" height="800" src="https://github.com/DIDSR/MCGPUv1.3_PCD/assets/structure.png">
 
 </p>
 
@@ -65,7 +65,7 @@ The output folder consists of two subfolders EID and PCD. EID or Energy Integrat
 
 <br>
 
-![image](https://github.com/tamish2/Sample/assets/141270879/487d2d1d-bbc4-49a8-b244-3b118569f378)
+![image](https://github.com/DIDSR/MCGPUv1.3_PCD/assets/output.png)
 
 Although each row still represents a pixel from the detector, the columns no longer represent one of the four types of photon interactions. Instead, each column now represents each energy bin in increasing order. This means the number of columns in thr PCD output files directly corresponds to the Nbin parameter that's defined. 
 
