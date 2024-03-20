@@ -65,7 +65,7 @@ The output folder consists of two subfolders EID and PCD. EID or Energy Integrat
 
 <br>
 
-![image](https://github.com/DIDSR/MCGPUv1.3_PCD/assets/output.png)
+![image](assets/output.png)
 
 Although each row still represents a pixel from the detector, the columns no longer represent one of the four types of photon interactions. Instead, each column now represents each energy bin in increasing order. This means the number of columns in thr PCD output files directly corresponds to the Nbin parameter that's defined. 
 
