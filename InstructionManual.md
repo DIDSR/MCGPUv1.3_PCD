@@ -205,7 +205,9 @@ Once the changes are applied, run the matlab code in the matlab interactive codi
 
 Next, we can run PcTK with MCGPU outputs. We provided two example matlab scripts for the pencil and fan beam examples. For now, we focus on the pencil beam outputs. User should have already run the `MC-GPUv1.3_PCD.x` to generate a set of outputs under Sample_Pencil_Beam/output/PCD/allPhotons/ with many projections. Here are the steps to run PcTK with these outputs:
 
-1. In generate_MCGPU_PENCILBEAM_SAMPLE.m, modify L16-27 to match the detector settings in Sample_Pencil_Beam/pencil_beam_simulation.in.
+1. In generate_MCGPU_PENCILBEAM_SAMPLE.m, 
+    - modify L16-27 to match the detector settings in Sample_Pencil_Beam/pencil_beam_simulation.in.
+    - If this is your first time ever running this detector setting, change the `get_detector_response` (L7) to 1. This will run the `prepare_detector.m` and generate detector response matrix for that specific detector setting.
 2. In the matlab interactive coding enviornment, run the script
 ```
 >> cd PcTK_Integration/
@@ -221,3 +223,4 @@ When completed, you will see the three files:
 ## References
 
 1. Pctk https://pctk.jhu.edu/
+
