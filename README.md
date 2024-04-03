@@ -78,7 +78,6 @@ To run a simulation (and keep the information reported to the standard output in
 
  `./MC-GPU_v1.3.x MC-GPU_v1.3.in | tee MC-GPU_v1.3.out`
 
-
 ## References
 
   - [1] A. Badal and A. Badano, Accelerating Monte Carlo simulations of photon transport in a voxelized geometry using a massively parallel Graphics Processing Unit, Med. Phys. 36, p. 4878-4880 (2009)
