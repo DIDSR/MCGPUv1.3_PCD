@@ -12,7 +12,10 @@ Documentation for the individual functions and variables implemented in the code
 
 MC-GPU [1-4] is a Monte Carlo simulation code that can generate synthetic radiographic images and computed tomography (CT) scans of realistic models of the human anatomy using the computational power of commodity Graphics Processing Unit (GPU) cards. The code implements a massively multi-threaded Monte Carlo simulation algorithm for the transport of x rays in a voxelized geometry. The x ray interaction models and material properties have been adapted from PENELOPE 2006 [5].
 
-MC-GPU was developed using the CUDA programming model from NVIDIA [6] to achieve maximum performance on NVIDIA GPUs. 
+MC-GPU was developed using the CUDA programming model from NVIDIA [6] to achieve maximum performance on NVIDIA GPUs. The code can also be compiled with a standard C compiler to be executed in a regular CPU. In a typical medical imaging simulation, the use of GPU computing with MC-GPU has been shown to provide a speed up of between 20 and 40 times, compared to the execution on a single CPU core.
+
+> [!WARNING]
+> Although MCGPU v1.3 was originally developed to run on both CPU and GPU, it is highly recommanded to run MCGPU v1.3 and MCGPU v1.3_PCD with GPU for its much faster processing time. 
 
 The MC-GPU code has been described in different scientific publications [1-4]. The main reference of this work, which the users should cite, is the following [1]:
 
@@ -69,22 +72,11 @@ The code can be easily compiled executing the command "make" or running the prov
  `nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3
   -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include 
   -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ 
-  -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v 
-  -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30`
+  -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v`
 
 To run a simulation (and keep the information reported to the standard output in an external file) the compiled code can be executed as:
 
  `./MC-GPU_v1.3.x MC-GPU_v1.3.in | tee MC-GPU_v1.3.out`
-
-All simulation can be executed in the same way using the code compiled for the CPU or the GPU (however, the number of histories should be reduced for the CPU to finish the simulation in a reasonable time). To run the simulation in parallel with MPI in multiple GPUs (or CPU cores) in the current computer the user can execute:
-
- `mpirun -n 4 ./MC-GPU_v1.3.x MC-GPU_v1.3.in`
-
-To use GPUs in different computers, the user must make sure all computers can access the simulation files and that the libraries are correctly set up in all nodes. To execute a simulation (with verbose MPI information being reported):
-
- `mpirun --tag-output -v -x LD_LIBRARY_PATH -hostfile myhostfile.txt -n 8 /fullPath/MC-GPU_v1.3.x /fullPath/MC-GPU_v1.3.in | tee MC-GPU_v1.3.out`
-
-The text file 'hostfile' lists the IP addresses and number of computing slots (GPUs) of the computers collaborating in the simulation. This file is not necessary when using multiple GPUs in a single workstation. When using multiple computers, the simulation files must be accessible by all threads in the same global path (for example by executing the simulation in a shared drive).
 
 
 ## References
