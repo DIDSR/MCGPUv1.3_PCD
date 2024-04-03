@@ -18,7 +18,7 @@
 # 
 #                      @file    Makefile
 #                      @author  Preetham Rudrarju [Preetham.Rudraraju(at)fda.hhs.gov]
-#                               Andreu Badal [Andreu.Badal-Soler@fda.hhs.gov]
+#                               Andreu Badal [Andreu.Badal-Soler(at)fda.hhs.gov]
 #                               Bahaa Ghammraoui  [Bahaa.Ghammraoui(at)fda.hhs.gov]
 #                      @date    02/01/2024
 #   
@@ -44,7 +44,7 @@ OPENMPI_PATH = /usr/include/openmpi
 
 
 # Compiler's flags:
-CFLAGS = -O3 -use_fast_math -m64 -DUSING_CUDA -I./ -I$(CUDA_PATH) -I$(CUDA_SDK_PATH) -L$(CUDA_SDK_LIB_PATH) -L$(CUDA_LIB_PATH) -lcudart -lm -lz -I$(OPENMPI_PATH) --ptxas-options=-v 
+CFLAGS = -m64 -O3 -use_fast_math -DUSING_CUDA -I./ -I$(CUDA_PATH) -I$(CUDA_SDK_PATH) -L$(CUDA_SDK_LIB_PATH) -I$(OPENMPI_PATH) -L$(CUDA_LIB_PATH) -lz --ptxas-options=-v 
 #  NOTE: you can compile the code for a specific GPU compute capability. For example, for compute capabilities 5.0 and 6.1, use flags:
 #    -gencode=arch=compute_50,code=sm_50 -gencode=arch=compute_61,code=sm_61
 

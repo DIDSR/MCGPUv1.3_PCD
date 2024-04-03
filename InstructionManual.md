@@ -78,7 +78,7 @@ The NonScatteredPhotons subfolder has the the phtoton counts at each pixel group
 
 #
 ## Running Sample
-Before running the simulation please make sure you have all requirements to the run the MCGPU software. This sample walkthrough will assume you have a good understanding of running MCGPU v1,3. If you have any issues with the base requirements please go over the Installation and Compilation subsection of MCGPU v1.3[1].
+Before running the simulation please make sure you have all requirements to the run the MCGPU software. This sample walkthrough assumes you have a good understanding of running MCGPU v1.3. If you have any issues with the base requirements please go over the Installation and Compilation subsection of MCGPU v1.3[1] or contact us directly.
 
 <br>
 
@@ -92,7 +92,7 @@ In the Sample_Pencil_Beam folder, you will see the pencil_beam_simulation.in fil
 <br>
 
 ```
-cd /MCGPUv1.3_PCD
+cd MCGPUv1.3_PCD
 ```
 
 <br>
@@ -108,12 +108,13 @@ make
 
 <br>
 
-This will generate an executable file `MC-GPU_v1.3_PCD.x` which we can now use to run the input file with the MC-GPU program. 
+This will generate an executable file `MC-GPU_v1.3_PCD.x` which we can now use to run the input file with the MC-GPU program. As an example, to run the `pencil_beam_simulation.in` file from the Sample_Pencil_Beam directory, you can run the following command line.
 
 <br>
 
 ```
-./MC-GPUv1.3_PCD.x Sample_Pencil_Beam/pencil_beam_simulation.in | tee MC-GPU_v1.3.out
+cd Sample_Pencil_Beam/
+./../MC-GPUv1.3_PCD.x pencil_beam_simulation.in | tee MC-GPU_v1.3.out
 ```
 
 <br>
@@ -126,7 +127,7 @@ Now on the terminal, you will see the MCGPU application running the simulation. 
 #
 ## Integrating the Photon Counting Toolkit with MCGPU to get Ideal PCD results
 
-This version of MCGPU is capable of simulating a Photon Counting Detetor. However, this simulation is only capable of producing results from that of an ideal Phototon Counting Detector. For those who are interested in getting simulation results to that of a realistic Photon Counting Detector, we included scripts to facilitate the integration to the Johns Hopkins Photon Counting Toolkit (PcTK), developed by Ken Taguchi, on the MCGPU simulation output.
+This version of MCGPU is capable of simulating a Photon Counting Detetor. However, this simulation is only capable of producing results from that of an ideal Phototon Counting Detector. For those who are interested in getting simulation results to that of a realistic Photon Counting Detector, we included scripts to facilitate the integration to the Johns Hopkins Photon Counting Toolkit (PcTK), developed by Ken Taguchi [2], on the MCGPU simulation output.
 
 <br>
 
@@ -205,9 +206,7 @@ Once the changes are applied, run the matlab code in the matlab interactive codi
 
 Next, we can run PcTK with MCGPU outputs. We provided two example matlab scripts for the pencil and fan beam examples. For now, we focus on the pencil beam outputs. User should have already run the `MC-GPUv1.3_PCD.x` to generate a set of outputs under Sample_Pencil_Beam/output/PCD/allPhotons/ with many projections. Here are the steps to run PcTK with these outputs:
 
-1. In generate_MCGPU_PENCILBEAM_SAMPLE.m, 
-    - modify L16-27 to match the detector settings in Sample_Pencil_Beam/pencil_beam_simulation.in.
-    - If this is your first time ever running this detector setting, change the `get_detector_response` (L7) to 1. This will run the `prepare_detector.m` and generate detector response matrix for that specific detector setting.
+1. In generate_MCGPU_PENCILBEAM_SAMPLE.m, modify L16-27 to match the detector settings in Sample_Pencil_Beam/pencil_beam_simulation.in.
 2. In the matlab interactive coding enviornment, run the script
 ```
 >> cd PcTK_Integration/
@@ -222,5 +221,5 @@ When completed, you will see the three files:
 #
 ## References
 
-1. Pctk https://pctk.jhu.edu/
-
+1. MCGPU v1.3 https://github.com/DIDSR/MCGPU
+2. Pctk https://pctk.jhu.edu/

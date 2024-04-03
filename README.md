@@ -12,7 +12,7 @@ Documentation for the individual functions and variables implemented in the code
 
 MC-GPU [1-4] is a Monte Carlo simulation code that can generate synthetic radiographic images and computed tomography (CT) scans of realistic models of the human anatomy using the computational power of commodity Graphics Processing Unit (GPU) cards. The code implements a massively multi-threaded Monte Carlo simulation algorithm for the transport of x rays in a voxelized geometry. The x ray interaction models and material properties have been adapted from PENELOPE 2006 [5].
 
-MC-GPU was developed using the CUDA programming model from NVIDIA [6] to achieve maximum performance on NVIDIA GPUs. The code can also be compiled with a standard C compiler to be executed in a regular CPU. In a typical medical imaging simulation, the use of GPU computing with MC-GPU has been shown to provide a speed up of between 20 and 40 times, compared to the execution on a single CPU core.
+MC-GPU was developed using the CUDA programming model from NVIDIA [6] to achieve maximum performance on NVIDIA GPUs. 
 
 The MC-GPU code has been described in different scientific publications [1-4]. The main reference of this work, which the users should cite, is the following [1]:
 
@@ -66,15 +66,11 @@ MC-GPU uses CUDA to access NVIDIA GPUs but all the actual computations are coded
 
 The code can be easily compiled executing the command "make" or running the provided "./make.sh" script. Optionally, the code can be executed from the command line with a command like this (example using CUDA and MPI, openMPI library in this case):
 
- `nvcc -DUSING_CUDA -DUSING_MPI MC-GPU_v1.3.cu -o MC-GPU_v1.3.x -O3
-  -use_fast_math -L/usr/lib/ -I. -I/usr/local/cuda/include 
+ `nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3
+  -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include 
   -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ 
-  -I/usr/include/openmpi  -lmpi -lz --ptxas-options=-v 
+  -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v 
   -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30`
-
-The same source code can also be compiled for a regular CPU using:
-
- `gcc -x c -O3 MC-GPU_v1.3.cu -o MC-GPU_v1.3_CPU.x -I./ -lm -lz`
 
 To run a simulation (and keep the information reported to the standard output in an external file) the compiled code can be executed as:
 
