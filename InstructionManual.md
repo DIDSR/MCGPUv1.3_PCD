@@ -117,10 +117,15 @@ If successful, you will see an `MC-GPU_v1.3_PCD.x` file, which is the executable
 Some of the common errors include ...
 1. No helper_function: This function is located in the file "helper_cuda.h" which is typically in samples/common folder. Therefore, you will need to find where your samples/common path is located in your machine. For older version of cuda, the samples/common folder came with cuda installation. For cuda version 12.4+, you may need the ![cuda-samples toolkit](https://github.com/NVIDIA/cuda-samples) and modify the `Makefile` or `make_MC-GPU_v1.3_PCD.sh` to point to the Common folder in the cuda-samples toolkit by adding to the `nvcc` command with an additional path "-I/path/to/samples/common".
 
-2. Missing "mpi.h" file: You would need to install libopenmpi-dev via the command
+2. Missing "mpi.h" file: You would first need to install libopenmpi-dev via the command
 ```
 sudo apt install libopenmpi-dev
 ```
+If/when it is installed, you would need to add three flags to the `nvcc` command: `-DUSING_MPI`, `-lmpi`, and a path to the `mpi.h` file. To find the `mpi.h`, do
+```
+locate mpi.h
+```
+Copy and paste the path (not the file itself) into the `nvcc` command via `-I` flag. For example, for a path `/path/to/mpi.h`, the flag would be `-I/path/to`.
 
 3. Even if the .x excutable is created, you may later run into pointer or memory errors. This may be due to an incorrect or missing gencode cababilities for your GPU model when doing the `nvcc` command in `Makefile` and/or `make_MC-GPU_v1.3_PCD.sh`. For older version of cuda, you would need to identify your GPU model via (e.g.) the `nvidia-smi` command and look up the correct cabability number for your model. For recent CUDA releases, `-arch=native` can be used instead of `-gencode=arch=compute_XX,code=sm_XX`, saving time to find the right gencode for your specific GPU model.
 
@@ -243,25 +248,22 @@ It should be changed to ...
     fprintf('\n');
     fprintf('nCov3x3pix: start time = %02d:%02d:%02.0f (hour:min:sec)\n', t1(4),t1(5),t1(6));
 ```
-Once the changes are applied, run the matlab code in the matlab interactive coding enviornment.
-```
->> cd PcTK_Integration/3_src
->> gen_nCovE
-```
 
-Next, we can run PcTK with MCGPU outputs. We provided two example matlab scripts for the pencil and fan beam examples. For now, we focus on the pencil beam outputs. User should have already run the `MC-GPUv1.3_PCD.x` to generate a set of outputs under Sample_Pencil_Beam/output/PCD/allPhotons/ with many projections. Here are the steps to run PcTK with these outputs:
-
-1. In generate_MCGPU_PENCILBEAM_SAMPLE.m, modify L16-27 to match the detector settings in Sample_Pencil_Beam/pencil_beam_simulation.in.
-2. In the matlab interactive coding enviornment, run the script
+Once the changes are applied, one can run the matlab code `generate_MCGPU_PENCILBEAM_SAMPLE.m` in MatLab interface under `PcTK_Integration/` folder. For the first time user, please make sure the `get_detector_response` variable (L7) is set to 1 such that it will create the covariance matrix for the detector parameters you provided. This will trigger the changes implemented in `gen_nCovE.m`.
 ```
 >> cd PcTK_Integration/
 >> generate_MCGPU_PENCILBEAM_SAMPLE
 ```
+Before running `generate_MCGPU_PENCILBEAM_SAMPLE.m`, it is assumed that there are MCGPU outputs located in `Sample_Pencil_Beam/output/PCD/allPhotons/`.
+
+Please note that the parameters set in `PcTK_Integration/generate_MCGPU_PENCILBEAM_SAMPLE.m` are the same as those in `Sample_Pencil_Beam/pencil_beam_simulation.in`. Depending on your project setup, you may need to change the settings in `PcTK_Integration/generate_MCGPU_PENCILBEAM_SAMPLE.m` (L12-35).
 
 When completed, you will see the three files:
 * data_MCGPU_Pctk.mat includes the MCGPU outputs with detector response
 * data_MCGPU.mat includes the original MCGPU outputs in .mat format
 * data_MCGPU.png: MCGPU output from 1 projection with and without detector response
+
+You may also test the software using a fan beam geometry (`Sample_Fan_Beam/fan_beam_simulation.in` and `PcTK_Integration/generate_MCGPU_FANBEAM_SAMPLE.m`).
 
 #
 ## References
