@@ -98,17 +98,31 @@ cd MCGPUv1.3_PCD
 <br>
 
 > [!WARNING]
-> Both MCGPU v1.3 and MCGPU v1.3_PCD have only been tested in a Linux environment. If you are trying to run this on another environment you may run into a few issues.
-
-For cuda version 12.4+, you may need the ![cuda-samples toolkit](https://github.com/NVIDIA/cuda-samples) and modify the `Makefile` or `make_MC-GPU_v1.3_PCD.sh` to point to the common folder in the cuda-samples toolkit.
-
-For recent CUDA releases, `-arch=native` can be used instead of `-gencode=arch=compute_XX,code=sm_XX`, saving time to find the right gencode for your specific GPU model.
+> Both MCGPU v1.3 and MCGPU v1.3_PCD have only been tested in a Linux environment. If you are trying to run this on another environment you may run into a few issues. 
 
 <br>
 
+To compile with `Makefile`, use the command
 ```
 make
 ```
+
+To compile with `make_MC-GPU_v1.3_PCD.sh`, use the command
+```
+source make_MC-GPU_v1.3_PCD.sh
+```
+
+If successful, you will see an `MC-GPU_v1.3_PCD.x` file, which is the executable file for this tool.
+
+Some of the common errors include ...
+1. No helper_function: This function is located in the file "helper_cuda.h" which is typically in samples/common folder. Therefore, you will need to find where your samples/common path is located in your machine. For older version of cuda, the samples/common folder came with cuda installation. For cuda version 12.4+, you may need the ![cuda-samples toolkit](https://github.com/NVIDIA/cuda-samples) and modify the `Makefile` or `make_MC-GPU_v1.3_PCD.sh` to point to the Common folder in the cuda-samples toolkit by adding to the `nvcc` command with an additional path "-I/path/to/samples/common".
+
+2. Missing "mpi.h" file: You would need to install libopenmpi-dev via the command
+```
+sudo apt install libopenmpi-dev
+```
+
+3. Even if the .x excutable is created, you may later run into pointer or memory errors. This may be due to an incorrect or missing gencode cababilities for your GPU model when doing the `nvcc` command in `Makefile` and/or `make_MC-GPU_v1.3_PCD.sh`. For older version of cuda, you would need to identify your GPU model via (e.g.) the `nvidia-smi` command and look up the correct cabability number for your model. For recent CUDA releases, `-arch=native` can be used instead of `-gencode=arch=compute_XX,code=sm_XX`, saving time to find the right gencode for your specific GPU model.
 
 <br>
 
