@@ -1,17 +1,17 @@
 close all
 clear all
-addpath( '../bin' );
+
 addpath( './3_src' );
 addpath( './mcgputools' );
 read_data                 = 1  ;
-get_detector_response     = 0  ;
+get_detector_response     = 0  ; %% Turn to 1 every time when creating a new detector response with its cov matrix
 
 %% define your detector geometry: 
 close all
 % From MC_GPU input file:
 MCGPU_output_folder = '[your_path]/sample_output/'
 
-read_binary   =  [#, #] % 1 for the 1st value in arr indicates we read binary 
+read_binary   =  [0, 1] % 1 for the 1st value in arr indicates we read binary 
                        % the second value is required if binary is enabled
                              % 1 - all_scattter data; 2 - non_scatter data;
                              % 3 - compton data; 4- rayleigh data;
@@ -45,7 +45,7 @@ if (get_detector_response)
 end
 %% Prepare data for 1 keV spacing: 
 % step 1:  we start by oversampling:---------------------------------------
-E_MCGPU         = linspace(30,120,Nbin)   ;
+E_MCGPU         = linspace(Estart,Eend,Nbin)   ;
 Ebin            = E_MCGPU(2) - E_MCGPU(1) ;
 Eo              = Ep(1):0.1:Ep(end)       ;
 Proj_MCGPU_over = zeros(Nview,Nrow,Nch,length(Eo));
@@ -99,5 +99,6 @@ imagesc(a); axis equal; axis tight
 a(:,:) = m4_sino_pcd_true(1,:,:);
 subplot(1,2,2)
 imagesc(a); axis equal; axis tight
+saveas(gcf, 'data_MCGPU.png');
 
 
