@@ -11,7 +11,7 @@
  
 
     % Read PCD parameters
-    filename_PCDparam = [dirname_inputdata,'SRF_param_v32_20170622.csv'];  % file for PCD parameters
+    filename_PCDparam = [dirname_inputdata,'SRF_param.csv'];  % file for PCD parameters
     [r0,e_sig,dpix,dz,rho_PCD,Nl,v_Eth] = func_read_params(filename_PCDparam, model_version);
    
 %%   Step 1. Read detector data
