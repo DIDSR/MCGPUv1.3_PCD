@@ -30,3 +30,6 @@ echo "      $ time mpirun --tag-output -v -x LD_LIBRARY_PATH -hostfile hostfile_
 echo " "
 echo "nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30"
 nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30
+
+## Notes on gencode:  For later cuda version, you may use -arch=native to save time looking up the capability number.
+nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/gpfs_projects/yeelamelim.thompson/MCGPUPC/RST/cuda-samples/Common -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v -arch=native
