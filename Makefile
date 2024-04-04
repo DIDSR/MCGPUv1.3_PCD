@@ -47,6 +47,7 @@ OPENMPI_PATH = /usr/include/openmpi
 CFLAGS = -m64 -O3 -use_fast_math -DUSING_CUDA -I./ -I$(CUDA_PATH) -I$(CUDA_SDK_PATH) -L$(CUDA_SDK_LIB_PATH) -I$(OPENMPI_PATH) -L$(CUDA_LIB_PATH) -lz --ptxas-options=-v 
 #  NOTE: you can compile the code for a specific GPU compute capability. For example, for compute capabilities 5.0 and 6.1, use flags:
 #    -gencode=arch=compute_50,code=sm_50 -gencode=arch=compute_61,code=sm_61
+#  For later cuda versions, one can use -arch=native instead of -gencode=arch=compute_XX,code=sm_XX
 
 
 # Command to erase files:
