@@ -11,7 +11,7 @@ addpath('./data')
 
     tic
     cd 1_inputdata/
-    filename = 'SRF_param_v32_20170622.csv';
+    filename = 'SRF_param.csv';
     fid = fopen(filename, 'wt');
 
     fprintf(fid,'r_0(um),%.1f\n',r0);
