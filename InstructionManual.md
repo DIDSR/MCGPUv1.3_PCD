@@ -98,7 +98,11 @@ cd MCGPUv1.3_PCD
 <br>
 
 > [!WARNING]
-> Both MCGPU v1.3 and MCGPU v1.3_PCD have only been tested in a Linux environment. If you are trying to run this on another environment you may run into a few issues. For cuda version 12.4+, you may need the ![cuda-samples toolkit](https://github.com/NVIDIA/cuda-samples) and modify the `Makefile` or `make_MC-GPU_v1.3_PCD.sh` to point to the common folder in the cuda-samples toolkit.
+> Both MCGPU v1.3 and MCGPU v1.3_PCD have only been tested in a Linux environment. If you are trying to run this on another environment you may run into a few issues.
+
+For cuda version 12.4+, you may need the ![cuda-samples toolkit](https://github.com/NVIDIA/cuda-samples) and modify the `Makefile` or `make_MC-GPU_v1.3_PCD.sh` to point to the common folder in the cuda-samples toolkit.
+
+For recent CUDA releases, `-arch=native` can be used instead of `-gencode=arch=compute_XX,code=sm_XX`, saving time to find the right gencode for your specific GPU model.
 
 <br>
 
@@ -114,7 +118,7 @@ This will generate an executable file `MC-GPU_v1.3_PCD.x` which we can now use t
 
 ```
 cd Sample_Pencil_Beam/
-./../MC-GPUv1.3_PCD.x pencil_beam_simulation.in | tee MC-GPU_v1.3.out
+./../MC-GPU_v1.3_PCD.x pencil_beam_simulation.in | tee MC-GPU_v1.3.out
 ```
 
 <br>
