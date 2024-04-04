@@ -1,10 +1,10 @@
 close all
 clear all
-addpath( '../bin' );
+
 addpath( './3_src' );
 addpath( './mcgputools' );
 read_data                 = 1  ;
-get_detector_response     = 0  ;
+get_detector_response     = 1  ; %% Turn to 1 every time when creating a new detector response with its cov matrix
 
 %% define your detector geometry: 
 close all
@@ -21,7 +21,7 @@ read_binary   =  [0, 1] % 1 for the 1st value in arr indicates we read binary
 pixel_size    =  0.1; % mm
 Nch           =  3   ; %<--- number of pixles x axis, Nch = geo.nDetector(2);
 Nrow          =  3  ; %<--- number of pixles y axis, Nrow = geo.nDetector(1); geo.nDetector=[240; 1];	
-Nview         =  1  ; %<--- nb of projections
+Nview         =  180  ; %<--- nb of projections
 Estart        =  5   ; %<---  Estart in MCGPU
 Eend          =  120  ; %<---  Eend in MCGPU
 Nbin          =  115  ; %<--- Number of Energy bins
@@ -47,7 +47,7 @@ if (get_detector_response)
 end
 %% Prepare data for 1 keV spacing: 
 % step 1:  we start by oversampling:---------------------------------------
-E_MCGPU         = linspace(30,120,Nbin)   ;
+E_MCGPU         = linspace(Estart,Eend,Nbin)   ;
 Ebin            = E_MCGPU(2) - E_MCGPU(1) ;
 Eo              = Ep(1):Ebin/100:Ep(end)       ;
 Proj_MCGPU_over = zeros(Nview,Nrow,Nch,length(Eo));
