@@ -127,7 +127,11 @@ locate mpi.h
 ```
 Copy and paste the path (not the file itself) into the `nvcc` command via `-I` flag. For example, for a path `/path/to/mpi.h`, the flag would be `-I/path/to`.
 
+Please note that MCGPU runs without MPI library at the expanse of runtime. To completely turn off MPI, remove the flags `-DUSING_MPI` and `-lmpi`.
+
 3. Even if the .x excutable is created, you may later run into pointer or memory errors. This may be due to an incorrect or missing gencode cababilities for your GPU model when doing the `nvcc` command in `Makefile` and/or `make_MC-GPU_v1.3_PCD.sh`. For older version of cuda, you would need to identify your GPU model via (e.g.) the `nvidia-smi` command and look up the correct cabability number for your model. For recent CUDA releases, `-arch=native` can be used instead of `-gencode=arch=compute_XX,code=sm_XX`, saving time to find the right gencode for your specific GPU model.
+
+For `nvcc` example comments, please see `make_MC-GPU_v1.3_PCD.sh`.
 
 <br>
 
