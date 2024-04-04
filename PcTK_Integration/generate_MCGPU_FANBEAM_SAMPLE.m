@@ -1,10 +1,10 @@
 close all
 clear all
-addpath( '../bin' );
+
 addpath( './3_src' );
 addpath( './mcgputools' );
 read_data                 = 1  ;
-get_detector_response     = 0  ;
+get_detector_response     = 1  ; %% Turn to 1 every time when creating a new detector response with its cov matrix
 
 %% define your detector geometry: 
 close all
@@ -47,7 +47,7 @@ if (get_detector_response)
 end
 %% Prepare data for 1 keV spacing: 
 % step 1:  we start by oversampling:---------------------------------------
-E_MCGPU         = linspace(30,120,Nbin)   ;
+E_MCGPU         = linspace(Estart,Eend,Nbin)   ;
 Ebin            = E_MCGPU(2) - E_MCGPU(1) ;
 Eo              = Ep(1):Ebin/100:Ep(end)       ;
 Proj_MCGPU_over = zeros(Nview,Nrow,Nch,length(Eo));
