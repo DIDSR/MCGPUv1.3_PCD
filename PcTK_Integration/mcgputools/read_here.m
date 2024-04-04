@@ -8,6 +8,9 @@ fclose(fid);
 % Read the data
 dataAll = importdata(filename, '\n', nLines);
 
+% Remove lines starting with '#' sign
+dataAll = dataAll(~startsWith(dataAll, '#'));
+
 %if (ii == 0)
     % Check if dataAll is a structure or a cell array
     if isstruct(dataAll) && isfield(dataAll, 'textdata')
@@ -18,7 +21,6 @@ dataAll = importdata(filename, '\n', nLines);
         error('Unexpected data format');
     end
 %end
-
 
 %% Assuming 'data' is your cell array
 nRows = length(data);
