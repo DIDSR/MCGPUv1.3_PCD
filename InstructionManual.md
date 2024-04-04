@@ -163,7 +163,33 @@ Once you download the PcTK from Ken, copy or move the entire package into the Pc
 
 <br>
 
-For the first time you ever run PcTK, you must run `3_src/gen_nCovE.m` to generate spectral response as normalized energy-dependent covariance matrix for 3x3 neighboring pixels. For it to work with MCGPU outputs, we require two modifications to this script before running it. First modification is around L142 with the following code:
+For the first time you ever run PcTK, you must run `3_src/gen_nCovE.m` to generate spectral response as normalized energy-dependent covariance matrix for 3x3 neighboring pixels. For it to work with MCGPU outputs, we require four modifications to this script before running it. 
+
+First is at L1 where the function `gen_nCovE()` is defined.
+```
+function    gen_nCovE
+```
+For this tool to work, we turned this function into a regular script such that it can access variables defined in previous steps/scripts.
+```
+%function    gen_nCovE
+addpath( './3_src' );
+```
+
+Second is at L108 with the following code:
+```
+    % parameter file name
+    filename_params  = [dirname_inputdata,'SRF_param_v32_20170622.csv']; 
+```
+The suffix numbers of the csv file may be different, but the file needs to be changed to `SRF_param.csv` to match the output filename defined in `prepare_detector.m`.
+```
+    % parameter file name
+    %%%% Changes  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %filename_params  = [dirname_inputdata,'SRF_param_v32_20170622.csv']; 
+    filename_params  = [dirname_inputdata,'SRF_param.csv']; 
+    %%%% Changes  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+```
+
+The third modification is around L142 with the following code:
 ```
 % Create filenames for nCov3x3E and nCov3x3w using parameters
     if ~exist(dirname_outputdata,'dir')
@@ -198,7 +224,8 @@ This should be modified to ...
     %%%% Changes  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     filename_nCov3x3w = [dirname_outputdata,filname_nCov3x3w];  % for nCov3x3w file
 ```
-Another modification happens in L192:
+
+The last modification happens in L192:
 ```
 %% (5) Generate nCovE data for 3x3 pixels
     t1 = clock;
