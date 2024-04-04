@@ -29,7 +29,17 @@ echo "    To run a simulation in parallel with openMPI execute:"
 echo "      $ time mpirun --tag-output -v -x LD_LIBRARY_PATH -hostfile hostfile_gpunodes -n 22 /GPU_cluster/MC-GPU_v1.3_PCD.x /GPU_cluster/MC-GPU_v1.3_PCD.in | tee MC-GPU_v1.3_PCD.out"
 echo " "
 echo "nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30"
-nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30
 
-## Notes on gencode:  For later cuda version, you may use -arch=native to save time looking up the capability number.
-## i.e. `-arch=native` instead of `-gencode=arch=compute_30,code=sm_30`
+## A few notes about nvcc flags:
+##   1. In older CUDA, the sample common path is by default `/usr/local/cuda/samples/common/inc`. For later CUDA (e.g. 12.4), you will need to git-clone the cuda samples toolkits (https://github.com/NVIDIA/cuda-samples). In the `nvcc` command, include a path to the common folder. In the examples below, the path is /path/to/cuda-samples/Common.
+##   2. If you know the gencode capability for your GPU model, use `-gencode=arch=compute_XX,code=sm_XX`. For later CUDA version (e.g. 12.4), you can use `-arch=native` without specifying the capability.
+##   3. If you want to use MPI for faster simulation, install the package libopenmpi-dev (`sudo apt install libopenmpi-dev`) and include two flags `-DUSING_MPI` and `-lmpi`. Make sure you provide a path to the mpi.h file (to find the path, use `locate mpi.h`)
+
+## Example using capability gencode flag
+#nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/include/openmpi -L/usr/lib/ -lz --ptxas-options=-v -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30
+
+## Example using arch=native flag
+#nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_CUDA -I. -I/path/to/cuda-samples/Common -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/lib/x86_64-linux-gnu/openmpi/include -L/usr/lib/ -lz --ptxas-options=-v -arch=native
+
+## Example using MPI
+nvcc MC-GPU_v1.3_PCD.cu -o MC-GPU_v1.3_PCD.x -m64 -O3 -use_fast_math -DUSING_MPI -DUSING_CUDA -I. -I/path/to/cuda-samples/Common -I/usr/local/cuda/include -I/usr/local/cuda/samples/common/inc -I/usr/local/cuda/samples/shared/inc/ -I/usr/lib/x86_64-linux-gnu/openmpi/include -L/usr/lib/ -lz --ptxas-options=-v -arch=native  -lmpi
