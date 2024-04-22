@@ -1,6 +1,6 @@
 # Introduction
 
-The MC-GPU simulator was created, and is actively under development, at [FDA](https://www.fda.gov)/[CDRH](https://www.fda.gov/Medical-Devices)/[OSEL](https://www.fda.gov/about-fda/cdrh-offices/office-science-and-engineering-laboratories)/[DIDSR](https://www.fda.gov/about-fda/cdrh-offices/division-imaging-diagnostics-and-software-reliability). 
+The MC-GPU simulator was created, and is actively under development, at [FDA](https://www.fda.gov)/[CDRH](https://www.fda.gov/Medical-Devices](https://www.fda.gov/about-fda/fda-organization/center-devices-and-radiological-health )/[OSEL](https://www.fda.gov/about-fda/cdrh-offices/office-science-and-engineering-laboratories)/[DIDSR](https://www.fda.gov/about-fda/cdrh-offices/division-imaging-diagnostics-and-software-reliability). 
 Multiple versions of MC-GPU have been released to reproduce different clinical applications of ionizing radiation. The source code, instructions, and publications for the different versions can be found in the following repositories:
   - [MCGPU v1.3](https://github.com/DIDSR/MCGPU): for projection radiography and cone-beam computed tomography.
   - [VICTRE_MCGPU](https://github.com/DIDSR/VICTRE_MCGPU): for mammography and digital breast tomosynthesis (DBT).
